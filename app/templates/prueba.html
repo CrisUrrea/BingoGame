@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo</title>
+    <style>
+        /* Estilos para las columnas de B, I, N, G, O */
+        .column-b { background-color: #FF0000; }
+        .column-i { background-color: #00FF00; }
+        .column-n { background-color: #0000FF; }
+        .column-g { background-color: #FF00FF; }
+        .column-o { background-color: #FFFF00; }
+    </style>
+</head>
+<body>
+    <h1>Bingo</h1>
+    <h2>{{ "Juego Iniciado" if juego_iniciado else "Juego Detenido" }}</h2>
+
+    <form method="POST">
+        <button type="submit" name="action" value="start" {{ "disabled" if juego_iniciado }}>Start</button>
+        <button type="submit" name="action" value="stop" {{ "disabled" if not juego_iniciado }}>Stop</button>
+        <button type="submit" name="action" value="reiniciar" {{ "disabled" if juego_iniciado }}>Reiniciar</button>
+    </form>
+
+    <h3>Balota Actual: {{ numeros_sorteados[-1] if numeros_sorteados else "N/A" }}</h3>
+
+    <h4>Balotas Sorteadas:</h4>
+    <ul>
+        {% for numero in numeros_sorteados %}
+        <li>{{ numero }}</li>
+        {% endfor %}
+    </ul>
+
+    <table border="1">
+        <tr>
+            <th class="column-b">B</th>
+            <th class="column-i">I</th>
+            <th class="column-n">N</th>
+            <th class="column-g">G</th>
+            <th class="column-o">O</th>
+        </tr>
+        <tr>
+            <td>{% for numero in range(1, 16) %} {{ numero }}<br> {% endfor %}</td>
+            <td>{% for numero in range(16, 31) %} {{ numero }}<br> {% endfor %}</td>
+            <td>{% for numero in range(31, 46) %} {{ numero }}<br> {% endfor %}</td>
+            <td>{% for numero in range(46, 61) %} {{ numero }}<br> {% endfor %}</td>
+            <td>{% for numero in range(61, 76) %} {{ numero }}<br> {% endfor %}</td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleIndex.css')}}">
+
+    <title>Bingo</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Bingo</h1>
+    <div class="bingo-table">
+        <div class="bingo-column" id="column-b">
+            <h2>B</h2>
+            {% for number in numeros_sorteados if 1 <= number <= 15 %}
+            <p>{{ number }}</p>
+            {% endfor %}
+        </div>
+        <div class="bingo-column" id="column-i">
+            <h2>I</h2>
+            {% for number in numeros_sorteados if 16 <= number <= 30 %}
+            <p>{{ number }}</p>
+            {% endfor %}
+        </div>
+        <div class="bingo-column" id="column-n">
+            <h2>N</h2>
+            {% for number in numeros_sorteados if 31 <= number <= 45 %}
+            <p>{{ number }}</p>
+            {% endfor %}
+        </div>
+        <div class="bingo-column" id="column-g">
+            <h2>G</h2>
+            {% for number in numeros_sorteados if 46 <= number <= 60 %}
+            <p>{{ number }}</p>
+            {% endfor %}
+        </div>
+        <div class="bingo-column" id="column-o">
+            <h2>O</h2>
+            {% for number in numeros_sorteados if 61 <= number <= 75 %}
+            <p>{{ number }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="button-container">
+        <form method="POST" action="/">
+            <input type="hidden" name="action" value="start">
+            <button type="submit" {% if juego_iniciado %}disabled{% endif %}>Start</button>
+        </form>
+        <form method="POST" action="/stop">
+            <button type="submit" {% if not juego_iniciado %}disabled{% endif %}>Stop</button>
+        </form>
+        <form method="POST" action="/reiniciar">
+            <button type="submit">Reiniciar</button>
+        </form>
+        <form method="POST" action="/seleccionar">
+            <button type="submit" {% if not juego_iniciado %}disabled{% endif %} name="action" value="seleccionar">
+                {% if juego_iniciado %}Ordenar Números{% else %}Seleccionar Número{% endif %}
+            </button>
+        </form>
+    </div>
+    <div>
+        {% if current_number %}
+        <h2 style="text-align: center;">Número actual: <span class="selected-number">{{ current_number }}</span></h2>
+        {% endif %}
+    </div>
+
+    <!-- Importa la biblioteca de Socket.IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        // Escucha la actualización de balotas desde el servidor
+        socket.on('update_balota', function(data) {
+            var balota = data.balota;
+            var balotaElement = document.createElement('p');
+            balotaElement.textContent = balota;
+
+            // Encuentra la columna correspondiente y agrega la balota
+            var columnId = getBalotaColumn(balota);
+            var column = document.getElementById(columnId);
+            if (column) {
+                column.appendChild(balotaElement);
+            }
+        });
+
+        // Función para determinar la columna en la que debe ir la balota
+        function getBalotaColumn(balota) {
+            if (1 <= balota && balota <= 15) {
+                return 'column-b';
+            } else if (16 <= balota && balota <= 30) {
+                return 'column-i';
+            } else if (31 <= balota && balota <= 45) {
+                return 'column-n';
+            } else if (46 <= balota && balota <= 60) {
+                return 'column-g';
+            } else {
+                return 'column-o';
+            }
+        }
+    </script>
+</body>
+</html>

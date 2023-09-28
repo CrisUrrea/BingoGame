@@ -1,0 +1,24 @@
+.bingo-table {
+    display: flex;
+}
+
+.bingo-column {
+    flex: 1;
+    text-align: center;
+    background-color: #E0E0E0;
+    padding: 10px;
+}
+
+.selected-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.button-container button {
+    margin: 5px;
+}
