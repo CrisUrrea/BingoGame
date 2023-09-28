@@ -30,6 +30,11 @@ pip install Flask
 pip install flask-socketio
 ```
 
+### Ejecutar
+```bash
+python app.py
+```
+
 ## Push
 La clausula se utiliza para mandar los cambios al repositorio, se realiza con el siguiente paso a paso:
 
