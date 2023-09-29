@@ -1,62 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styleIndex.css')}}">
-
+    <!-- <script src="../scripts/index.js"></script> -->
     <title>Bingo</title>
 </head>
+
 <body>
     <h1 style="text-align: center;">Bingo</h1>
-    <div class="bingo-table">
-        <div class="bingo-column" id="column-b">
-            <h2>B</h2>
-            {% for number in numeros_sorteados if 1 <= number <= 15 %}
-            <p>{{ number }}</p>
-            {% endfor %}
-        </div>
-        <div class="bingo-column" id="column-i">
-            <h2>I</h2>
-            {% for number in numeros_sorteados if 16 <= number <= 30 %}
-            <p>{{ number }}</p>
-            {% endfor %}
-        </div>
-        <div class="bingo-column" id="column-n">
-            <h2>N</h2>
-            {% for number in numeros_sorteados if 31 <= number <= 45 %}
-            <p>{{ number }}</p>
-            {% endfor %}
-        </div>
-        <div class="bingo-column" id="column-g">
-            <h2>G</h2>
-            {% for number in numeros_sorteados if 46 <= number <= 60 %}
-            <p>{{ number }}</p>
-            {% endfor %}
-        </div>
-        <div class="bingo-column" id="column-o">
-            <h2>O</h2>
-            {% for number in numeros_sorteados if 61 <= number <= 75 %}
-            <p>{{ number }}</p>
-            {% endfor %}
-        </div>
-    </div>
     <div class="button-container">
         <form method="POST" action="/">
             <input type="hidden" name="action" value="start">
             <button type="submit" {% if juego_iniciado %}disabled{% endif %}>Start</button>
         </form>
-        <form method="POST" action="/stop">
+        <form method="POST" action="/">
+            <input type="hidden" name="action" value="stop">
             <button type="submit" {% if not juego_iniciado %}disabled{% endif %}>Stop</button>
         </form>
-        <form method="POST" action="/reiniciar">
+        <form method="POST" action="/">
+            <input type="hidden" name="action" value="reiniciar">
             <button type="submit">Reiniciar</button>
         </form>
-        <form method="POST" action="/seleccionar">
-            <button type="submit" {% if not juego_iniciado %}disabled{% endif %} name="action" value="seleccionar">
-                {% if juego_iniciado %}Ordenar Números{% else %}Seleccionar Número{% endif %}
-            </button>
+        <form method="POST" action="/ordenar_numeros">
+            <button type="submit" id="ordenarNumeros" {% if juego_iniciado %}disabled{% endif %}>Ordenar</button>
         </form>
+    </div>
+    <div class="bingo-table">
+        <div class="bingo-column" id="column-b">
+            <h2>B</h2>
+            {% for number in numeros_sorteados if 1 <= number <=15 %} <p>{{ number }}</p>
+                {% endfor %}
+        </div>
+        <div class="bingo-column" id="column-i">
+            <h2>I</h2>
+            {% for number in numeros_sorteados if 16 <= number <=30 %} <p>{{ number }}</p>
+                {% endfor %}
+        </div>
+        <div class="bingo-column" id="column-n">
+            <h2>N</h2>
+            {% for number in numeros_sorteados if 31 <= number <=45 %} <p>{{ number }}</p>
+                {% endfor %}
+        </div>
+        <div class="bingo-column" id="column-g">
+            <h2>G</h2>
+            {% for number in numeros_sorteados if 46 <= number <=60 %} <p>{{ number }}</p>
+                {% endfor %}
+        </div>
+        <div class="bingo-column" id="column-o">
+            <h2>O</h2>
+            {% for number in numeros_sorteados if 61 <= number <=75 %} <p>{{ number }}</p>
+                {% endfor %}
+        </div>
     </div>
     <div>
         {% if current_number %}
@@ -71,7 +68,7 @@
         var socket = io.connect('http://' + document.domain + ':' + location.port);
 
         // Escucha la actualización de balotas desde el servidor
-        socket.on('update_balota', function(data) {
+        socket.on('update_balota', function (data) {
             var balota = data.balota;
             var balotaElement = document.createElement('p');
             balotaElement.textContent = balota;
@@ -100,4 +97,5 @@
         }
     </script>
 </body>
+
 </html>

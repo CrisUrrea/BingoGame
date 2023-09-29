@@ -7,13 +7,12 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 socketio = SocketIO(app)
 
-# Lista de balotas disponibles para el juego
 balotas = list(range(1, 76))
 
 # Estado del juego
 juego_iniciado = False
 numeros_sorteados = []
-tiempo_entre_balotas = 5  # Tiempo en segundos entre balotas
+tiempo_entre_balotas = 1
 
 def generar_balota():
     if balotas:
@@ -27,13 +26,14 @@ def index():
     global juego_iniciado
     global numeros_sorteados
     global tiempo_entre_balotas
+    global balotas
 
     if request.method == 'POST':
         if request.form['action'] == 'start':
             juego_iniciado = True
             numeros_sorteados = []
             balotas = list(range(1, 76))
-            tiempo_entre_balotas = 5  # Mantener el tiempo fijo en 5 segundos
+            tiempo_entre_balotas = 5 
             return redirect(url_for('index'))
         elif request.form['action'] == 'stop':
             juego_iniciado = False
@@ -41,13 +41,18 @@ def index():
         elif request.form['action'] == 'reiniciar':
             juego_iniciado = False
             numeros_sorteados = []
+            balotas = list(range(1, 76))
             return redirect(url_for('index'))
-        elif request.form['action'] == 'seleccionar':
-            if juego_iniciado:
-                numeros_sorteados.sort()
-            return redirect(url_for('index'))
-
+        elif request.form['action'] == 'ordenar':
+            return redirect(url_for('ordenar_numeros'))
     return render_template('index.html', juego_iniciado=juego_iniciado, numeros_sorteados=numeros_sorteados, tiempo_entre_balotas=tiempo_entre_balotas)
+
+@app.route('/ordenar_numeros', methods=['POST'])
+def ordenar_numeros():
+    global numeros_sorteados
+    if not juego_iniciado:
+        numeros_sorteados.sort()
+    return redirect(url_for('index'))
 
 @socketio.on('connect')
 def handle_connect():
