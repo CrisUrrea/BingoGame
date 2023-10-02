@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleBingo.css')}}">
+    <title>Bingo</title>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Bingo</h1>
+    <div class="bingo-table">
+        <table>
+            <tr>
+                <th>B</th>
+                <th>I</th>
+                <th>N</th>
+                <th>G</th>
+                <th>O</th>
+            </tr>
+            {% for row in bingo_table %}
+            <tr>
+                {% for number in row %}
+                <td id="cell-{{ number }}" onclick="marcarNumero(this)">{{ number }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div>
+        <button onclick="verificarBingo()">Bingo</button>
+        <p id="bingo-message"></p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/bingo.js') }}"></script>
+</body>
+
+</html>
