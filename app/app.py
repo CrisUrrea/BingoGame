@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 from flask_socketio import SocketIO, emit
 import random
 import time
@@ -15,6 +15,8 @@ numeros_registrados = []
 tiempo_entre_balotas = 5
 balotas = list(range(1, 76))
 markedNumbers = {}
+a = 1103515245
+c = 12345
 
 class GeneradorLinealCongruente:
     def __init__(self, semilla, a, c, m):
@@ -39,7 +41,8 @@ def generar_balota():
 
 def generar_tabla_de_bingo():
     bingo_table = []
-    numeros_disponibles = {  # Rangos para cada columna
+    numeros_disponibles = {  
+        # Rangos para cada columna
         'B': list(range(1, 16)),
         'I': list(range(16, 31)),
         'N': list(range(31, 46)),
@@ -71,6 +74,9 @@ def tablero():
     global numeros_sorteados
     global tiempo_entre_balotas
     global balotas
+    global a
+    global c
+    global generador
 
     if request.method == 'POST':
         if request.form['action'] == 'start':
@@ -88,6 +94,9 @@ def tablero():
             juego_iniciado = False
             numeros_sorteados = []
             numeros_registrados = []
+            a = a ** 2
+            c = c ** 2
+            generador = generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
             balotas = list(range(1, 76))
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'ordenar':
@@ -96,10 +105,13 @@ def tablero():
     return render_template('tablero.html', juego_iniciado=juego_iniciado, numeros_sorteados=numeros_sorteados, tiempo_entre_balotas=tiempo_entre_balotas, markedNumbers=markedNumbers)
 
 # Pestaña Bingo
-@app.route('/bingo')
+@app.route('/bingo/')
 def bingo():
     # Llama a la función para generar la tabla de bingo
     bingo_table = generar_tabla_de_bingo()
+    if request.method == 'POST':
+        if request.form['action'] == 'verificar_bingo':
+            redirect(url_for('verificar_bingo'))
     return render_template('bingo.html', bingo_table=bingo_table)
 
 # Ordenador
@@ -137,7 +149,6 @@ def verificar_bingo():
     global numeros_registrados
 
     if juego_iniciado:
-        # Obtén los números marcados desde la solicitud POST como una cadena
         numeros_marcados_str = request.form.get('numeros_marcados')
         
         # Dividir la cadena en una lista de números únicos

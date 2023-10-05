@@ -28,14 +28,37 @@ function marcarNumero(cell) {
 
 // Agregar un evento al botón "Bingo" para verificar el Bingo
 const btnVerificarBingo = document.querySelector('#btnVerificarBingo');
-btnVerificarBingo.addEventListener('click', function () {
+btnVerificarBingo.addEventListener('click', function (e) {
+    e.preventDefault();
     // Comprobar si se han marcado todos los números (contador igual a 25)
     if (contadorNumerosMarcados === 25) {
-        socket.emit('verificar_bingo');
+        fetch("/verificar_bingo", {
+            method: "POST",
+            body: new URLSearchParams({ "numeros_marcados": document.getElementById('numerosMarcados').value }),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        })
+            .then(response => response.text())
+            .then(message => {
+                Swal.fire({
+                     icon: 'info',
+                     text: message,
+                })
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
     } else {
-        alert('Debes marcar todos los números del tablero antes de verificar el Bingo.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Debes marcar todos los números del tablero antes de verificar el Bingo.',
+          });
+        // alert('Debes marcar todos los números del tablero antes de verificar el Bingo.');
     }
 });
+
 
 // Declarar socket como variable global
 const socket = io.connect('http://' + document.domain + ':' + location.port);
