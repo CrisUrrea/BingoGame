@@ -61,7 +61,9 @@ btnVerificarBingo.addEventListener('click', function (e) {
 
 
 // Declarar socket como variable global
-const socket = io.connect('https://' + document.domain + ':' + location.port);
+//const socket = io.connect('https://' + document.domain + ':' + location.port); //Local
+var socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com'); // Heroku
+
 
 document.addEventListener("DOMContentLoaded", function () {
     // Manejar la conexión al servidor Socket.IO

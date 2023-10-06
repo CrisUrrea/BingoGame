@@ -1,4 +1,7 @@
-var socket = io.connect('https://' + document.domain + ':' + location.port);
+//Declaracion
+// var socket = io.connect('https://' + document.domain + ':' + location.port); //Local
+var socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com'); //Heroku
+
 
         // Escucha la actualización de balotas desde el servidor
         socket.on('update_balota', function (data) {
