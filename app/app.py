@@ -177,10 +177,11 @@ def verificar_bingo():
     else:
         return "El juego no está en curso"
 
+# Configurar Flask-SocketIO para utilizar Redis
+socketio = SocketIO(app, message_queue=os.environ.get('REDIS_URL'))
+
 port = int(os.environ.get('PORT', 5000))
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
-
-if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port)
+    socketio.run(app, debug=True)
