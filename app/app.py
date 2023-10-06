@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, request, redirect, url_for
 from flask_socketio import SocketIO, emit
 import time
 import random
+import os
 
 # Declaracion Flask
 app = Flask(__name__)
@@ -176,6 +177,10 @@ def verificar_bingo():
     else:
         return "El juego no está en curso"
 
+port = int(os.environ.get('PORT', 5000))
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=port)
