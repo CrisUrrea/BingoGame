@@ -61,7 +61,7 @@ btnVerificarBingo.addEventListener('click', function (e) {
 
 
 // Declarar socket como variable global
-const socket = io.connect('http://' + document.domain + ':' + location.port);
+const socket = io.connect('https://' + document.domain + ':' + location.port);
 
 document.addEventListener("DOMContentLoaded", function () {
     // Manejar la conexión al servidor Socket.IO

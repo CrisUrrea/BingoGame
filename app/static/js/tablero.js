@@ -1,4 +1,4 @@
-var socket = io.connect('http://' + document.domain + ':' + location.port);
+var socket = io.connect('https://' + document.domain + ':' + location.port);
 
         // Escucha la actualización de balotas desde el servidor
         socket.on('update_balota', function (data) {
