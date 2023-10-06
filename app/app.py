@@ -2,6 +2,8 @@ from flask import Flask, jsonify, render_template, request, redirect, url_for
 from flask_socketio import SocketIO, emit
 import time
 import random
+import os
+import eventlet
 
 # Declaracion Flask
 app = Flask(__name__)
@@ -175,7 +177,15 @@ def verificar_bingo():
             return "Aún no has marcado todos los números del tablero"
     else:
         return "El juego no está en curso"
+    
+eventlet.monkey_patch()
 
+socketio = SocketIO(app, async_mode='eventlet')
+
+# Configurar Flask-SocketIO para utilizar Redis
+socketio = SocketIO(app, message_queue=os.environ.get('REDIS_URL'))
+
+port = int(os.environ.get('PORT', 8080))
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, host='0.0.0.0', port=port)
