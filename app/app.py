@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for
 from flask_socketio import SocketIO, emit
 import time
+import random
 
 # Declaracion Flask
 app = Flask(__name__)
@@ -38,7 +39,7 @@ def generar_balota():
         return balota
     return None
 
-def generar_tabla_de_bingo():
+def generar_tabla_de_bingo(generador):
     bingo_table = []
     numeros_disponibles = {  
         # Rangos para cada columna
@@ -49,13 +50,18 @@ def generar_tabla_de_bingo():
         'O': list(range(61, 76))
     }
 
+    generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
+
     for _ in range(5):
         columna = []
         for letra in 'BINGO':
             # Elegir un número aleatorio dentro del rango correspondiente
-            numero = random.choice(numeros_disponibles[letra])
-            numeros_disponibles[letra].remove(numero)
-            columna.append(numero)
+            numero = generador.generar_numero()
+            disponibles = numeros_disponibles[letra]
+            if disponibles:  # Verificar si hay números disponibles en el rango
+                numero_elegido = random.choice(disponibles)
+                disponibles.remove(numero_elegido)
+                columna.append(numero_elegido)
         bingo_table.append(columna)
 
     return bingo_table
@@ -107,7 +113,7 @@ def tablero():
 @app.route('/bingo/')
 def bingo():
     # Llama a la función para generar la tabla de bingo
-    bingo_table = generar_tabla_de_bingo()
+    bingo_table = generar_tabla_de_bingo(generador)
     if request.method == 'POST':
         if request.form['action'] == 'verificar_bingo':
             redirect(url_for('verificar_bingo'))
