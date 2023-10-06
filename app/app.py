@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for
 from flask_socketio import SocketIO, emit
-import random
 import time
 
 # Declaracion Flask
