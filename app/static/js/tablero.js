@@ -1,6 +1,6 @@
 //Declaracion
 // var socket = io.connect('https://' + document.domain + ':' + location.port); //Local
-var socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com/socket.io'); //Heroku
+var socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com/tablero/socket.io'); //Heroku
 
 
         // Escucha la actualización de balotas desde el servidor
