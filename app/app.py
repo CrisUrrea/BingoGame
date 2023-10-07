@@ -140,11 +140,14 @@ def sortear_balotas():
 
     while juego_iniciado:
         balota = generar_balota()
+        if not juego_iniciado:  # Comprobación para detener la generación de balotas
+            break
         if balota:
             numeros_sorteados.append(balota)
             numeros_registrados.append(balota)
             markedNumbers[str(balota)] = False
-            socketio.emit('update_balota', {'balota': balota})
+            if juego_iniciado:  # Verificar nuevamente antes de emitir la balota
+                socketio.emit('update_balota', {'balota': balota})
             time.sleep(tiempo_entre_balotas)
 
 # Función para verificar el bingo
