@@ -97,9 +97,9 @@ def tablero():
             juego_iniciado = False
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'reiniciar':
+            juego_iniciado = False
             numeros_sorteados = []
             numeros_registrados = []
-         
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'ordenar':
             juego_iniciado = False
