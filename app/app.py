@@ -99,9 +99,7 @@ def tablero():
         elif request.form['action'] == 'reiniciar':
             numeros_sorteados = []
             numeros_registrados = []
-            a = a ** 2
-            c = c ** 2
-            generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
+         
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'ordenar':
             juego_iniciado = False
