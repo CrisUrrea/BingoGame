@@ -97,13 +97,11 @@ def tablero():
             juego_iniciado = False
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'reiniciar':
-            juego_iniciado = False
             numeros_sorteados = []
             numeros_registrados = []
             a = a ** 2
             c = c ** 2
-            generador = generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
-            balotas = list(range(1, 76))
+            generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'ordenar':
             juego_iniciado = False
@@ -142,8 +140,6 @@ def sortear_balotas():
 
     while juego_iniciado:
         balota = generar_balota()
-        if not juego_iniciado:  # Comprobación para detener la generación de balotas
-            break
         if balota:
             numeros_sorteados.append(balota)
             numeros_registrados.append(balota)
