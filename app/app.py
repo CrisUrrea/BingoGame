@@ -139,9 +139,9 @@ def sortear_balotas():
     global numeros_registrados
 
     while juego_iniciado:
-        balota = generar_balota()
         if not juego_iniciado:  # Comprobación para detener la generación de balotas
             break
+        balota = generar_balota()
         if balota:
             numeros_sorteados.append(balota)
             numeros_registrados.append(balota)
