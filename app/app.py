@@ -100,6 +100,10 @@ def tablero():
             juego_iniciado = False
             numeros_sorteados = []
             numeros_registrados = []
+            tiempo_entre_balotas = 1
+            a = a ** 2
+            c = c ** 2
+            generador = generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'ordenar':
             juego_iniciado = False
