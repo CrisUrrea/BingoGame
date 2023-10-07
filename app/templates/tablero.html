@@ -15,6 +15,7 @@
             <input type="hidden" name="action" value="start">
             <button type="submit" {% if juego_iniciado %}disabled{% endif %}>Start</button>
         </form>
+        <!-- En el formulario de pausa -->
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="stop">
             <button type="submit" {% if not juego_iniciado %}disabled{% endif %}>Stop</button>

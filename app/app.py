@@ -134,12 +134,15 @@ def handle_connect():
     if juego_iniciado:
         socketio.start_background_task(target=sortear_balotas)
 
+# Modificación en la función sortear_balotas
 def sortear_balotas():
     global juego_iniciado
     global numeros_sorteados
     global numeros_registrados
 
     while juego_iniciado:
+        if not juego_iniciado:  # Agrega esta comprobación
+            break  # Si el juego se detiene, sale del bucle
         balota = generar_balota()
         if balota:
             numeros_sorteados.append(balota)
@@ -147,6 +150,7 @@ def sortear_balotas():
             markedNumbers[str(balota)] = False
             socketio.emit('update_balota', {'balota': balota})
             time.sleep(tiempo_entre_balotas)
+
 
 # Función para verificar el bingo
 @app.route('/verificar_bingo', methods=['POST'])
