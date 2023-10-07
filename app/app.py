@@ -77,10 +77,13 @@ def index():
 # Pestaña Tablero
 @app.route('/tablero/', methods=['GET', 'POST'])
 def tablero():
-    juego_iniciado_local = juego_iniciado
-    numeros_sorteados_local = numeros_sorteados
-    tiempo_entre_balotas_local = tiempo_entre_balotas
-    balotas_local = balotas
+    global juego_iniciado
+    global numeros_sorteados
+    global tiempo_entre_balotas
+    global balotas
+    global a
+    global c
+    global generador
 
     if request.method == 'POST':
         action = request.form['action']
