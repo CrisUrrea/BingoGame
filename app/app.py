@@ -77,39 +77,35 @@ def index():
 # Pestaña Tablero
 @app.route('/tablero/', methods=['GET', 'POST'])
 def tablero():
-    global juego_iniciado
-    global numeros_sorteados
-    global tiempo_entre_balotas
-    global balotas
-    global a
-    global c
-    global generador
+    juego_iniciado_local = juego_iniciado
+    numeros_sorteados_local = numeros_sorteados
+    tiempo_entre_balotas_local = tiempo_entre_balotas
+    balotas_local = balotas
 
     if request.method == 'POST':
-        if request.form['action'] == 'start':
-            if not juego_iniciado:
-                juego_iniciado = True
-                tiempo_entre_balotas = 1
-                if not numeros_sorteados:
-                    balotas = list(range(1, 76))
+        action = request.form['action']
+        if action == 'start':
+            if not juego_iniciado_local:
+                juego_iniciado_local = True
+                tiempo_entre_balotas_local = 1
+                if not numeros_sorteados_local:
+                    balotas_local = list(range(1, 76))
                     numeros_registrados = []
-                return redirect(url_for('tablero'))
-        elif request.form['action'] == 'stop':
-            juego_iniciado = False
-            return redirect(url_for('tablero'))
-        elif request.form['action'] == 'reiniciar':
-            juego_iniciado = False
-            numeros_sorteados = []
+        elif action == 'stop':
+            juego_iniciado_local = False
+        elif action == 'reiniciar':
+            juego_iniciado_local = False
+            numeros_sorteados_local = []
             numeros_registrados = []
             a = a ** 2
             c = c ** 2
-            generador = generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
-            balotas = list(range(1, 76))
-            return redirect(url_for('tablero'))
-        elif request.form['action'] == 'ordenar':
-            juego_iniciado = False
-            return redirect(url_for('ordenar_numeros'))
-    return render_template('tablero.html', juego_iniciado=juego_iniciado, numeros_sorteados=numeros_sorteados, tiempo_entre_balotas=tiempo_entre_balotas, markedNumbers=markedNumbers)
+            generador_local = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
+            balotas_local = list(range(1, 76))
+        elif action == 'ordenar':
+            juego_iniciado_local = False
+            numeros_sorteados_local.sort()  # Ordenar números
+
+    return render_template('tablero.html', juego_iniciado=juego_iniciado_local, numeros_sorteados=numeros_sorteados_local, tiempo_entre_balotas=tiempo_entre_balotas_local, markedNumbers=markedNumbers)
 
 # Pestaña Bingo
 @app.route('/bingo/')
