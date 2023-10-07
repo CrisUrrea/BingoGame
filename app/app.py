@@ -92,7 +92,7 @@ def tablero():
                 if not numeros_sorteados:
                     balotas = list(range(1, 76))
                     numeros_registrados = []
-                return redirect(url_for('tablero'))
+            return redirect(url_for('tablero'))
         elif request.form['action'] == 'stop':
             juego_iniciado = False
             return redirect(url_for('tablero'))
