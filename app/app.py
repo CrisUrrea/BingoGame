@@ -68,11 +68,6 @@ def generar_tabla_de_bingo(generador):
     return bingo_table
 
 # Rutas
-# Pestaña Index
-@app.route('/')
-def index():
-    return render_template('index.html')
-
 # Pestaña Tablero
 @app.route('/tablero/', methods=['GET', 'POST'])
 def tablero():
@@ -85,7 +80,8 @@ def tablero():
     global generador
 
     if request.method == 'POST':
-        if request.form['action'] == 'start':
+        action = request.form['action']
+        if action == 'start':
             if not juego_iniciado:
                 juego_iniciado = True
                 tiempo_entre_balotas = 1
@@ -93,21 +89,19 @@ def tablero():
                     balotas = list(range(1, 76))
                     numeros_registrados = []
                 return redirect(url_for('tablero'))
-        elif request.form['action'] == 'stop':
+        elif action == 'stop':
             juego_iniciado = False
-            return redirect(url_for('tablero'))
-        elif request.form['action'] == 'reiniciar':
+        elif action == 'reiniciar':
             juego_iniciado = False
             numeros_sorteados = []
             numeros_registrados = []
             a = a ** 2
             c = c ** 2
-            generador = generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
+            generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
             balotas = list(range(1, 76))
-            return redirect(url_for('tablero'))
-        elif request.form['action'] == 'ordenar':
+        elif action == 'ordenar':
             juego_iniciado = False
-            return redirect(url_for('ordenar_numeros'))
+            numeros_sorteados.sort()  # Ordenar números
     return render_template('tablero.html', juego_iniciado=juego_iniciado, numeros_sorteados=numeros_sorteados, tiempo_entre_balotas=tiempo_entre_balotas, markedNumbers=markedNumbers)
 
 # Pestaña Bingo
@@ -141,16 +135,15 @@ def sortear_balotas():
     global numeros_registrados
 
     while juego_iniciado:
-        if not juego_iniciado:  # Agrega esta comprobación
-            break  # Si el juego se detiene, sale del bucle
         balota = generar_balota()
+        if not juego_iniciado:  # Comprobación para detener la generación de balotas
+            break
         if balota:
             numeros_sorteados.append(balota)
             numeros_registrados.append(balota)
             markedNumbers[str(balota)] = False
             socketio.emit('update_balota', {'balota': balota})
             time.sleep(tiempo_entre_balotas)
-
 
 # Función para verificar el bingo
 @app.route('/verificar_bingo', methods=['POST'])

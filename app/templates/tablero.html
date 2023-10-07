@@ -18,11 +18,11 @@
         <!-- En el formulario de pausa -->
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="stop">
-            <button type="submit" {% if not juego_iniciado %}disabled{% endif %}>Stop</button>
+            <button type="submit" {% if juego_iniciado %}disabled{% endif %}>Stop</button>
         </form>
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="reiniciar">
-            <button type="submit">Reiniciar</button>
+            <button type="submit" {% if juego_iniciado %}disabled{% endif %}>Reiniciar</button>
         </form>
         <form method="POST" action="/ordenar_numeros">
             <button type="submit" id="ordenarNumeros" {% if juego_iniciado %}disabled{% endif %}>Ordenar</button>
