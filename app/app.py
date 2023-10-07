@@ -84,6 +84,10 @@ def tablero():
     global a
     global c
     global generador
+    juego_iniciado_local = juego_iniciado
+    numeros_sorteados_local = numeros_sorteados
+    tiempo_entre_balotas_local = tiempo_entre_balotas
+    balotas_local = balotas
 
     if request.method == 'POST':
         action = request.form['action']
