@@ -68,6 +68,11 @@ def generar_tabla_de_bingo(generador):
     return bingo_table
 
 # Rutas
+# Pestaña Index
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 # Pestaña Tablero
 @app.route('/tablero/', methods=['GET', 'POST'])
 def tablero():
@@ -128,7 +133,6 @@ def handle_connect():
     if juego_iniciado:
         socketio.start_background_task(target=sortear_balotas)
 
-# Modificación en la función sortear_balotas
 def sortear_balotas():
     global juego_iniciado
     global numeros_sorteados
