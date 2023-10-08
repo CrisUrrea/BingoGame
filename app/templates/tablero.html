@@ -61,6 +61,15 @@
         {% endif %}
     </div>
 
+     <div class="highlighted-number-container">
+        <span id="highlightedNumber"></span> 
+       <img src="{{ url_for('static',filename='Image/Esteban.jpg') }}" alt="Imagen 1" id="highlightedImage">
+
+
+    </div>
+
+
+
     <!-- Importa la biblioteca de Socket.IO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="{{ url_for('static', filename='js/tablero.js') }}"></script>

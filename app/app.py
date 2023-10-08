@@ -4,6 +4,8 @@ import time
 import random
 import os
 
+ultimo_numero_emitido = None
+
 # Declaracion Flask
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
@@ -13,7 +15,7 @@ socketio = SocketIO(app)
 juego_iniciado = False
 numeros_sorteados = []
 numeros_registrados = []
-tiempo_entre_balotas = 5
+tiempo_entre_balotas = 20
 balotas = list(range(1, 76))
 markedNumbers = {}
 a = 1103515245
@@ -88,7 +90,7 @@ def tablero():
         if request.form['action'] == 'start':
             if not juego_iniciado:
                 juego_iniciado = True
-                tiempo_entre_balotas = 1
+                tiempo_entre_balotas = 5
                 if not numeros_sorteados:
                     balotas = list(range(1, 76))
                     numeros_registrados = []
@@ -110,6 +112,7 @@ def tablero():
             return redirect(url_for('ordenar_numeros'))
     return render_template('tablero.html', juego_iniciado=juego_iniciado, numeros_sorteados=numeros_sorteados, 
     tiempo_entre_balotas=tiempo_entre_balotas, markedNumbers=markedNumbers)
+
 
 # Pestaña Bingo
 @app.route('/bingo/')
@@ -147,9 +150,11 @@ def sortear_balotas():
         if balota:
             numeros_sorteados.append(balota)
             numeros_registrados.append(balota)
-            markedNumbers[str(balota)] = False
             socketio.emit('update_balota', {'balota': balota})
-            time.sleep(tiempo_entre_balotas)
+        
+        time.sleep(tiempo_entre_balotas)
+
+
 
 # Función para verificar el bingo
 @app.route('/verificar_bingo', methods=['POST'])

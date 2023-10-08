@@ -5,6 +5,8 @@ const socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com', {
     secure: true, // Indica que es una conexión segura (HTTPS)
 });
 
+// var socket = io.connect('http://' + document.domain + ':' + location.port); // Local
+
 // Escucha la actualización de balotas desde el servidor
 socket.on('update_balota', function (data) {
     var balota = data.balota;
