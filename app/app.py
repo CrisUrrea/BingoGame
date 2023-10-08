@@ -156,6 +156,7 @@ def sortear_balotas():
 def verificar_bingo():
     global numeros_sorteados
     global numeros_registrados
+    global juego_iniciado
 
     if juego_iniciado:
         numeros_marcados_str = request.form.get('numeros_marcados')
@@ -172,6 +173,7 @@ def verificar_bingo():
         
         if len(numeros_marcados_revision) == 25:  # Se han marcado todos los números del tablero
             if set(numeros_marcados_revision).issubset(set(numeros_sorteados)):
+                juego_iniciado = False
                 return "Ganaste el Bingo"
             else:
                 return "No todos los números han sido anunciados"
