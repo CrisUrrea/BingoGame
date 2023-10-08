@@ -99,10 +99,10 @@ def tablero():
             juego_iniciado = False
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'reiniciar':
-            juego_iniciado = True
+            juego_iniciado = False
             numeros_sorteados = []
             numeros_registrados = []
-            tiempo_entre_balotas = 1
+            tiempo_entre_balotas = 5
             a = a ** 2
             c = c ** 2
             generador = generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
@@ -187,7 +187,7 @@ def verificar_bingo():
     else:
         return "El juego no está en curso"
 
-port = int(os.environ.get('PORT', 5000))
+port = int(os.environ.get('PORT', 8080))
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=port)
