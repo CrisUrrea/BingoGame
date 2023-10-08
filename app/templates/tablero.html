@@ -15,6 +15,7 @@
             <input type="hidden" name="action" value="start">
             <button type="submit" {% if juego_iniciado %}disabled{% endif %}>Start</button>
         </form>
+        <!-- En el formulario de pausa -->
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="stop">
             <button type="submit" {% if not juego_iniciado %}disabled{% endif %}>Stop</button>
@@ -24,7 +25,7 @@
             <button type="submit">Reiniciar</button>
         </form>
         <form method="POST" action="/ordenar_numeros">
-            <button type="submit" id="ordenarNumeros" {% if juego_iniciado %}disabled{% endif %}>Ordenar</button>
+            <button type="submit" id="ordenarNumeros" {% if not juego_iniciado %}disabled{% endif %}>Ordenar</button>
         </form>
     </div>
     <div class="bingo-table">
@@ -59,6 +60,15 @@
         <h2 style="text-align: center;">Número actual: <span class="selected-number">{{ current_number }}</span></h2>
         {% endif %}
     </div>
+
+     <div class="highlighted-number-container">
+        <span id="highlightedNumber"></span> 
+       <img src="{{ url_for('static',filename='Image/Esteban.jpg') }}" alt="Imagen 1" id="highlightedImage">
+
+
+    </div>
+
+
 
     <!-- Importa la biblioteca de Socket.IO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>

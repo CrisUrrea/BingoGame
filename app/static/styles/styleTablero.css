@@ -1,24 +1,124 @@
 .bingo-table {
     display: flex;
+    gap: 1rem;
+    margin: 250px 0;
+    padding: 20px;
+    border-radius: 15px;
+    background: #F5F5F5;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 .bingo-column {
     flex: 1;
     text-align: center;
-    background-color: #E0E0E0;
-    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    border-radius: 12px;
+    transition: transform 0.2s;
+}
+
+.bingo-column:hover {
+    transform: scale(1.05);
 }
 
 .selected-number {
     font-size: 24px;
     font-weight: bold;
-    color: #007BFF;
+    color: #333;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .button-container {
-    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
 }
 
 .button-container button {
-    margin: 5px;
+    padding: 10px 20px;
+    background-color: #40E0D0; 
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.button-container button:hover {
+    background-color: #20B2AA; 
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.highlighted-number-container {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+    z-index: 100;
+    display: flex;
+    align-items: center; 
+    gap: 1rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+#highlightedImage {
+    max-width: 150px;
+    height: auto;
+}
+
+
+.highlighted-number-container {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) ;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+    z-index: 100;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    gap: 1rem;
+    background-color: #20B2AA;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    min-width:100%;
+    max-width:100%;
+}
+
+
+
+#highlightedImage {
+    max-width: 170px;
+    height: auto;
+}
+
+#highlightedNumber {
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    width: 100px; 
+    height: 100px;
+    background-color: white;   
+    border-radius: 50%;   
+    border: 3px solid black;  
+    font-size: 3rem;   
+    font-weight: bold;
+    color: #333;   
+    margin-right: 20px; 
+}
+
+
+

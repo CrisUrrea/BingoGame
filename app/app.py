@@ -3,7 +3,8 @@ from flask_socketio import SocketIO, emit
 import time
 import random
 import os
-import eventlet
+
+ultimo_numero_emitido = None
 
 # Declaracion Flask
 app = Flask(__name__)
@@ -14,7 +15,7 @@ socketio = SocketIO(app)
 juego_iniciado = False
 numeros_sorteados = []
 numeros_registrados = []
-tiempo_entre_balotas = 5
+tiempo_entre_balotas = 20
 balotas = list(range(1, 76))
 markedNumbers = {}
 a = 1103515245
@@ -89,27 +90,29 @@ def tablero():
         if request.form['action'] == 'start':
             if not juego_iniciado:
                 juego_iniciado = True
-                tiempo_entre_balotas = 1
+                tiempo_entre_balotas = 5
                 if not numeros_sorteados:
                     balotas = list(range(1, 76))
                     numeros_registrados = []
-                return redirect(url_for('tablero'))
+            return redirect(url_for('tablero'))
         elif request.form['action'] == 'stop':
             juego_iniciado = False
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'reiniciar':
-            juego_iniciado = False
+            juego_iniciado = True
             numeros_sorteados = []
             numeros_registrados = []
+            tiempo_entre_balotas = 1
             a = a ** 2
             c = c ** 2
             generador = generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
-            balotas = list(range(1, 76))
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'ordenar':
             juego_iniciado = False
             return redirect(url_for('ordenar_numeros'))
-    return render_template('tablero.html', juego_iniciado=juego_iniciado, numeros_sorteados=numeros_sorteados, tiempo_entre_balotas=tiempo_entre_balotas, markedNumbers=markedNumbers)
+    return render_template('tablero.html', juego_iniciado=juego_iniciado, numeros_sorteados=numeros_sorteados, 
+    tiempo_entre_balotas=tiempo_entre_balotas, markedNumbers=markedNumbers)
+
 
 # Pestaña Bingo
 @app.route('/bingo/')
@@ -142,18 +145,23 @@ def sortear_balotas():
 
     while juego_iniciado:
         balota = generar_balota()
+        if not juego_iniciado:  # Comprobación para detener la generación de balotas
+            break
         if balota:
             numeros_sorteados.append(balota)
             numeros_registrados.append(balota)
-            markedNumbers[str(balota)] = False
             socketio.emit('update_balota', {'balota': balota})
-            time.sleep(tiempo_entre_balotas)
+        
+        time.sleep(tiempo_entre_balotas)
+
+
 
 # Función para verificar el bingo
 @app.route('/verificar_bingo', methods=['POST'])
 def verificar_bingo():
     global numeros_sorteados
     global numeros_registrados
+    global juego_iniciado
 
     if juego_iniciado:
         numeros_marcados_str = request.form.get('numeros_marcados')
@@ -170,6 +178,7 @@ def verificar_bingo():
         
         if len(numeros_marcados_revision) == 25:  # Se han marcado todos los números del tablero
             if set(numeros_marcados_revision).issubset(set(numeros_sorteados)):
+                juego_iniciado = False
                 return "Ganaste el Bingo"
             else:
                 return "No todos los números han sido anunciados"
@@ -177,16 +186,8 @@ def verificar_bingo():
             return "Aún no has marcado todos los números del tablero"
     else:
         return "El juego no está en curso"
-    
-eventlet.monkey_patch()
-
-socketio = SocketIO(app, async_mode='eventlet')
-
-# Configurar Flask-SocketIO para utilizar Redis
-socketio = SocketIO(app, message_queue=os.environ.get('REDIS_URL'))
 
 port = int(os.environ.get('PORT', 5000))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=port)
-    socketio.run(app, debug=True)
+    socketio.run(app, host='0.0.0.0', port=port)

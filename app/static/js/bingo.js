@@ -26,7 +26,6 @@ function marcarNumero(cell) {
     // No emitimos el número seleccionado al servidor aquí; lo hacemos al verificar el Bingo
 }
 
-// Agregar un evento al botón "Bingo" para verificar el Bingo
 const btnVerificarBingo = document.querySelector('#btnVerificarBingo');
 btnVerificarBingo.addEventListener('click', function (e) {
     e.preventDefault();
@@ -39,29 +38,45 @@ btnVerificarBingo.addEventListener('click', function (e) {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         })
-            .then(response => response.text())
-            .then(message => {
-                Swal.fire({
-                     icon: 'info',
-                     text: message,
-                })
-            })
-            .catch(error => {
-                console.error("Error:", error);
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error("Error en la solicitud");
+            }
+        })
+        .then(message => {
+            Swal.fire({
+                icon: 'info',
+                text: message,
             });
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ocurrió un error al verificar el Bingo. Inténtalo de nuevo más tarde.',
+            });
+        });
     } else {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'Debes marcar todos los números del tablero antes de verificar el Bingo.',
-          });
-        // alert('Debes marcar todos los números del tablero antes de verificar el Bingo.');
+        });
     }
 });
 
 
 // Declarar socket como variable global
-const socket = io.connect('http://' + document.domain + ':' + location.port);
+//const socket = io.connect('https://' + document.domain + ':' + location.port); //Local
+const socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com', { //Heroku
+    path: '/socket.io',
+    transports: ['websocket'], // Utiliza WebSocket como transporte
+    secure: true, // Indica que es una conexión segura (HTTPS)
+});
+
 
 document.addEventListener("DOMContentLoaded", function () {
     // Manejar la conexión al servidor Socket.IO
