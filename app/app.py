@@ -187,7 +187,8 @@ def verificar_bingo():
     else:
         return "El juego no está en curso"
 
-port = int(os.environ.get('PORT', 8080))
+# port = int(os.environ.get('PORT', 8080))
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=port)
+    # socketio.run(app, host='0.0.0.0', port=port)
+    socketio.run(app, debug=True)

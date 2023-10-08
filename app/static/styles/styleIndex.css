@@ -18,7 +18,18 @@ p {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-a {
+.principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.principal a, .principal button {
     display: inline-block;
     background-color: #3498db;
     color: #ffffff;
@@ -28,15 +39,19 @@ a {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s, transform 0.3s;
     margin-bottom: 15px;
+    border: none;
+    text-decoration: none;
 }
 
-a:hover {
+.principal a:hover, .principal button:hover {
     background-color: #2980b9;
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    color: rgb(218, 218, 218);
 }
 
-a:active {
+.principal a:active, .principal button:active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

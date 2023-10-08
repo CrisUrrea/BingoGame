@@ -1,15 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styleIndex.css')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>Inicio</title>
 </head>
+
 <body>
     <p>Bienvenido</p>
-    <a href="{{ url_for('bingo') }}">Ir a Bingo</a>
-    <br>
-    <a href="{{ url_for('tablero') }}">Ir al tablero</a>
+    <div class="principal">
+        <a href="{{ url_for('bingo') }}">Ir a Bingo</a>
+        <a href="{{ url_for('tablero') }}">Ir al tablero</a>
+        <button type="button" data-toggle="modal" data-target="#myModal">
+            Como Jugar
+        </button>
+    </div>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Contenido de la ventana modal -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Intrucciones</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Este es el contenido de mi ventana modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
