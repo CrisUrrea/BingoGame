@@ -9,14 +9,15 @@ const socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com', {
 
 // Escucha la actualización de balotas desde el servidor
 socket.on('update_balota', function (data) {
-    var balota = data.balota;
-    var balotaElement = document.createElement('p');
+    let balota = data.balota;
+    let balotaElement = document.createElement('p');
     balotaElement.textContent = balota;
-    var columnId = getBalotaColumn(balota);
-    var column = document.getElementById(columnId);
+    let columnId = getBalotaColumn(balota);
+    let column = document.getElementById(columnId);
     if (column) {
         column.appendChild(balotaElement);
     }
+    document.getElementById('highlightedNumber').textContent = balota;
 });
 
 function getBalotaColumn(balota) {
