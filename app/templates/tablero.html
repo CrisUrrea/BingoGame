@@ -28,6 +28,15 @@
             <button type="submit" id="ordenarNumeros" {% if not juego_iniciado %}disabled{% endif %}>Ordenar</button>
         </form>
     </div>
+    <div>
+        {% if current_number %}
+        <h2 style="text-align: center;">Número actual: <span class="selected-number">{{ current_number }}</span></h2>
+        {% endif %}
+    </div>
+    <div class="highlighted-number-container">
+        <span id="highlightedNumber"></span>
+        <img src="{{ url_for('static',filename='Image/Esteban.jpg') }}" alt="Imagen 1" id="highlightedImage">
+    </div>
     <div class="bingo-table">
         <div class="bingo-column" id="column-b">
             <h2>B</h2>
@@ -55,21 +64,6 @@
                 {% endfor %}
         </div>
     </div>
-    <div>
-        {% if current_number %}
-        <h2 style="text-align: center;">Número actual: <span class="selected-number">{{ current_number }}</span></h2>
-        {% endif %}
-    </div>
-
-     <div class="highlighted-number-container">
-        <span id="highlightedNumber"></span> 
-       <img src="{{ url_for('static',filename='Image/Esteban.jpg') }}" alt="Imagen 1" id="highlightedImage">
-
-
-    </div>
-
-
-
     <!-- Importa la biblioteca de Socket.IO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="{{ url_for('static', filename='js/tablero.js') }}"></script>

@@ -1,3 +1,4 @@
+/* Estilos comunes para todos los dispositivos */
 .bingo-table {
     display: flex;
     gap: 1rem;
@@ -38,7 +39,7 @@
 
 .button-container button {
     padding: 10px 20px;
-    background-color: #40E0D0; 
+    background-color: #40E0D0;
     border: none;
     border-radius: 25px;
     color: white;
@@ -50,24 +51,9 @@
 }
 
 .button-container button:hover {
-    background-color: #20B2AA; 
+    background-color: #20B2AA;
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.highlighted-number-container {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3rem;
-    font-weight: bold;
-    color: #333;
-    z-index: 100;
-    display: flex;
-    align-items: center; 
-    gap: 1rem;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 #highlightedImage {
@@ -75,30 +61,27 @@
     height: auto;
 }
 
-
 .highlighted-number-container {
     position: absolute;
-    top: 45%;
+    top: 25%;
     left: 50%;
-    transform: translate(-50%, -50%) ;
+    transform: translate(-50%, -50%);
     font-size: 3rem;
     font-weight: bold;
     color: #333;
     z-index: 100;
     display: flex;
-    align-items: center; 
-    justify-content: center; 
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
     background-color: #20B2AA;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     width: 50%;
-    min-width:100%;
-    max-width:100%;
+    min-width: 100%;
+    max-width: 100%;
 }
-
-
 
 #highlightedImage {
     max-width: 170px;
@@ -106,19 +89,44 @@
 }
 
 #highlightedNumber {
-    display: inline-flex; 
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 100px; 
+    width: 100px;
     height: 100px;
-    background-color: white;   
-    border-radius: 50%;   
-    border: 3px solid black;  
-    font-size: 3rem;   
+    background-color: white;
+    border-radius: 50%;
+    border: 3px solid black;
+    font-size: 3rem;
     font-weight: bold;
-    color: #333;   
-    margin-right: 20px; 
+    color: #333;
+    margin-right: 20px;
+
 }
 
+/* Escritorio */
+@media(min-width: 1920px) {
+    .highlighted-number-container{
+        top: 25%;
+    }
+}
 
+/* Portatil */
+@media (max-width: 1500px) {
+    .highlighted-number-container{
+        top: 30%;
+    }
+}
 
+/* Celular */
+@media (max-width: 768px) {
+    .highlighted-number-container {
+        position: fixed;
+        top: 45%;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
