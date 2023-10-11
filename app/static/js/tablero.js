@@ -43,3 +43,25 @@ const getBalotaColumn = (balota) => {
         return 'column-o';
     }
 }
+
+function ordenarBalotas() {
+    const columnas = ['column-b', 'column-i', 'column-n', 'column-g', 'column-o'];
+
+    for (const columnaId of columnas) {
+        const columna = document.getElementById(columnaId);
+        const numeros = Array.from(columna.getElementsByTagName('p'));
+        
+        // Ordena los números dentro de la columna
+        numeros.sort((a, b) => parseInt(a.textContent) - parseInt(b.textContent));
+        
+        // Elimina los números desordenados de la columna
+        numeros.forEach(numero => columna.removeChild(numero));
+        
+        // Agrega los números ordenados nuevamente a la columna
+        numeros.forEach(numero => columna.appendChild(numero));
+    }
+}
+
+// Luego, puedes activar esta función cuando se haga clic en el botón "Ordenar" utilizando un evento onClick
+const botonOrdenar = document.getElementById('ordenarNumeros');
+botonOrdenar.addEventListener('click', ordenarBalotas());

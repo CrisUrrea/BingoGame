@@ -24,7 +24,8 @@
             <input type="hidden" name="action" value="reiniciar">
             <button type="submit">Reiniciar</button>
         </form>
-        <form method="POST" action="/ordenar_numeros">
+        <form method="POST" action="/tablero/">
+            <input type="hidden" name="action" value="ordenar">
             <button type="submit" id="ordenarNumeros" {% if not juego_iniciado %}disabled{% endif %}>Ordenar</button>
         </form>
     </div>

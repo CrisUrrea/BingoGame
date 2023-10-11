@@ -109,7 +109,9 @@ def tablero():
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'ordenar':
             juego_iniciado = False
-            return redirect(url_for('ordenar_numeros'))
+            tiempo_entre_balotas = 5
+            numeros_sorteados = sort_bingo_table(numeros_sorteados)
+            return redirect(url_for('tablero'))
     return render_template('tablero.html', juego_iniciado=juego_iniciado, numeros_sorteados=numeros_sorteados, 
     tiempo_entre_balotas=tiempo_entre_balotas, markedNumbers=markedNumbers)
 
@@ -129,8 +131,32 @@ def bingo():
 def ordenar_numeros():
     global numeros_sorteados
     if not juego_iniciado:
-        numeros_sorteados.sort()
+        numeros_sorteados = sorted(numeros_sorteados)
     return redirect(url_for('tablero'))
+
+def sort_bingo_table(numbers):
+    sorted_table = {'B': [], 'I': [], 'N': [], 'G': [], 'O': []}
+
+    for number in numbers:
+        if 1 <= number <= 15:
+            sorted_table['B'].append(number)
+        elif 16 <= number <= 30:
+            sorted_table['I'].append(number)
+        elif 31 <= number <= 45:
+            sorted_table['N'].append(number)
+        elif 46 <= number <= 60:
+            sorted_table['G'].append(number)
+        elif 61 <= number <= 75:
+            sorted_table['O'].append(number)
+
+    for key in sorted_table:
+        sorted_table[key].sort()
+
+    sorted_numbers = []
+    for key in ['B', 'I', 'N', 'G', 'O']:
+        sorted_numbers.extend(sorted_table[key])
+
+    return sorted_numbers
 
 # Conexion Socket
 @socketio.on('connect')
@@ -145,7 +171,7 @@ def sortear_balotas():
 
     while juego_iniciado:
         balota = generar_balota()
-        if not juego_iniciado:  # Comprobación para detener la generación de balotas
+        if not juego_iniciado:
             break
         if balota:
             numeros_sorteados.append(balota)
@@ -153,8 +179,6 @@ def sortear_balotas():
             socketio.emit('update_balota', {'balota': balota})
         
         time.sleep(tiempo_entre_balotas)
-
-
 
 # Función para verificar el bingo
 @app.route('/verificar_bingo', methods=['POST'])
