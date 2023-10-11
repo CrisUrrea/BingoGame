@@ -10,12 +10,18 @@ body {
     padding: 20px;
 }
 
-p {
-    font-size: 24px;
+.welcome img{
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.welcome h2 {
     font-weight: bold;
     color: #333;
     margin-bottom: 30px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: center;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .principal {
@@ -54,4 +60,9 @@ p {
 .principal a:active, .principal button:active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.modal-body h5{
+    text-align: center;
+    font-weight: bold;
 }

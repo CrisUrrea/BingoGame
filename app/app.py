@@ -90,7 +90,7 @@ def tablero():
         if request.form['action'] == 'start':
             if not juego_iniciado:
                 juego_iniciado = True
-                tiempo_entre_balotas = 5
+                tiempo_entre_balotas = 10
                 if not numeros_sorteados:
                     balotas = list(range(1, 76))
                     numeros_registrados = []
@@ -102,14 +102,14 @@ def tablero():
             juego_iniciado = False
             numeros_sorteados = []
             numeros_registrados = []
-            tiempo_entre_balotas = 5
+            tiempo_entre_balotas = 10
             a = a ** 2
             c = c ** 2
             generador = generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'ordenar':
             juego_iniciado = False
-            tiempo_entre_balotas = 5
+            tiempo_entre_balotas = 10
             numeros_sorteados = sort_bingo_table(numeros_sorteados)
             return redirect(url_for('tablero'))
     return render_template('tablero.html', juego_iniciado=juego_iniciado, numeros_sorteados=numeros_sorteados, 
@@ -187,29 +187,27 @@ def verificar_bingo():
     global numeros_registrados
     global juego_iniciado
 
-    if juego_iniciado:
-        numeros_marcados_str = request.form.get('numeros_marcados')
+    numeros_marcados_str = request.form.get('numeros_marcados')
         
-        # Dividir la cadena en una lista de números únicos
-        numeros_marcados_lista = list(set(numeros_marcados_str.split(',')))
+    # Dividir la cadena en una lista de números únicos
+    numeros_marcados_lista = list(set(numeros_marcados_str.split(',')))
         
-        # Convierte los números en enteros
-        numeros_marcados_revision = [int(numero.strip()) for numero in numeros_marcados_lista]
+    # Convierte los números en enteros
+    numeros_marcados_revision = [int(numero.strip()) for numero in numeros_marcados_lista]
         
-        print('Números marcados recibidos:', numeros_marcados_revision)
-        print("Longitud:", len(numeros_marcados_revision))
-        print("Sorteados:", numeros_sorteados)
+    print('Números marcados recibidos:', numeros_marcados_revision)
+    print("Longitud:", len(numeros_marcados_revision))
+    print("Sorteados:", numeros_sorteados)
         
-        if len(numeros_marcados_revision) == 25:  # Se han marcado todos los números del tablero
-            if set(numeros_marcados_revision).issubset(set(numeros_sorteados)):
-                juego_iniciado = False
-                return "Ganaste el Bingo"
-            else:
-                return "No todos los números han sido anunciados"
+    if len(numeros_marcados_revision) == 25:  # Se han marcado todos los números del tablero
+        if set(numeros_marcados_revision).issubset(set(numeros_sorteados)):
+            juego_iniciado = False
+            return "Ganaste el Bingo"
         else:
-            return "Aún no has marcado todos los números del tablero"
+            return "No todos los números han sido anunciados"
     else:
-        return "El juego no está en curso"
+        return "Aún no has marcado todos los números del tablero"
+
 
 # port = int(os.environ.get('PORT', 8080))
 

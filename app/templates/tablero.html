@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='Image/LogoBingo.png')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styleTablero.css')}}">
-    <title>Bingo</title>
+    <title>Tablero</title>
 </head>
 
 <body>
@@ -13,12 +14,12 @@
     <div class="button-container">
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="start">
-            <button type="submit" {% if juego_iniciado %}disabled{% endif %}>Start</button>
+            <button type="submit" {% if juego_iniciado %}disabled{% endif %}>Iniciar</button>
         </form>
         <!-- En el formulario de pausa -->
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="stop">
-            <button type="submit" {% if not juego_iniciado %}disabled{% endif %}>Stop</button>
+            <button type="submit" {% if not juego_iniciado %}disabled{% endif %}>Parar</button>
         </form>
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="reiniciar">
