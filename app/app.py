@@ -209,8 +209,8 @@ def verificar_bingo():
         return "Aún no has marcado todos los números del tablero"
 
 
-# port = int(os.environ.get('PORT', 8080))
+port = int(os.environ.get('PORT', 8080))
 
 if __name__ == '__main__':
-    # socketio.run(app, host='0.0.0.0', port=port)
-    socketio.run(app, debug=True)
+    socketio.run(app, host='0.0.0.0', port=port)
+    #socketio.run(app, debug=True)
