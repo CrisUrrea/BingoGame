@@ -13,4 +13,4 @@ simple-websocket==0.10.1
 wsproto==1.2.0
 WTForms==3.0.1
 gunicorn==20.1.0
-eventlet==0.30.7
+eventlet==0.30.1
