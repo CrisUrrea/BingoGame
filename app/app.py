@@ -90,7 +90,7 @@ def tablero():
         if request.form['action'] == 'start':
             if not juego_iniciado:
                 juego_iniciado = True
-                tiempo_entre_balotas = 1
+                tiempo_entre_balotas = 5
                 if not numeros_sorteados:
                     balotas = list(range(1, 76))
                     numeros_registrados = []
@@ -102,14 +102,14 @@ def tablero():
             juego_iniciado = False
             numeros_sorteados = []
             numeros_registrados = []
-            tiempo_entre_balotas = 1
+            tiempo_entre_balotas = 5
             a = a ** 2
             c = c ** 2
             generador = generador = GeneradorLinealCongruente(semilla=int(time.time()), a=1103515245, c=12345, m=32768**32)
             return redirect(url_for('tablero'))
         elif request.form['action'] == 'ordenar':
             juego_iniciado = False
-            tiempo_entre_balotas = 1
+            tiempo_entre_balotas = 5
             numeros_sorteados = sort_bingo_table(numeros_sorteados)
             return redirect(url_for('tablero'))
     return render_template('tablero.html', juego_iniciado=juego_iniciado, numeros_sorteados=numeros_sorteados, 
@@ -209,8 +209,8 @@ def verificar_bingo():
         return "Aún no has marcado todos los números del tablero"
 
 
-port = int(os.environ.get('PORT', 8080))
+# port = int(os.environ.get('PORT', 8080))
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=port)
-    #socketio.run(app, debug=True)
+    # socketio.run(app, host='0.0.0.0', port=port)
+    socketio.run(app, debug=True)

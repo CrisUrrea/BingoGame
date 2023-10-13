@@ -27,7 +27,7 @@
         </form>
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="ordenar">
-            <button type="submit" id="ordenarNumeros" {% if not juego_iniciado %}disabled{% endif %}>Ordenar</button>
+            <button type="submit" id="ordenarNumeros" {% if not juego_iniciado %}disabled{% endif %}>Reconteo</button>
         </form>
         <a href="{{ url_for('index') }}">Volver</a>
     </div>
