@@ -76,7 +76,7 @@ btnVerificarBingo.addEventListener('click', function (e) {
 // });
 
 //Heroku
-const socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com', {
+const socket = io.connect('https://bingogame-eec117d31d41.herokuapp.com', {
     path: '/socket.io',
     transports: ['websocket'], // Utiliza WebSocket como transporte
     secure: true, // Indica que es una conexión segura (HTTPS)
