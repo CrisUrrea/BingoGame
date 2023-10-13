@@ -18,6 +18,7 @@ socket.on('update_balota', function (data) {
         column.appendChild(balotaElement);
     }
     document.getElementById('highlightedNumber').textContent = balota;
+
     anunciarNumero(balota);
 });
 

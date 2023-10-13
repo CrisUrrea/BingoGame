@@ -43,7 +43,7 @@
     margin-top: 30px;
 }
 
-.button-container button {
+.button-container button, a {
     padding: 10px 20px;
     background-color: #40E0D0;
     border: none;
@@ -54,6 +54,8 @@
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .button-container button:hover {
@@ -127,8 +129,7 @@
 /* Celular */
 @media (max-width: 768px) {
     .highlighted-number-container {
-        position: fixed;
-        top: 45%;
+        top: 50%;
     }
 
     .button-container {

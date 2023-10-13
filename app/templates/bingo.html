@@ -12,7 +12,10 @@
 <body>
     <h1 style="text-align: center;">Bingo</h1>
     <div class="btnCarta">
+        <br>
+        <a href="{{ url_for('index') }}">Volver</a>
         <form method="POST" action="/verificar_bingo">
+            <br>
             <button type="submit" id="btnVerificarBingo">Bingo</button>
             <input type="hidden" name="numeros_marcados" id="numerosMarcados">
         </form>

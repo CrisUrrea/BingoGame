@@ -66,3 +66,9 @@ body {
     text-align: center;
     font-weight: bold;
 }
+
+@media (max-width: 768px) {
+    .welcome img{
+        width: 100%;
+    }
+}

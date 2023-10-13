@@ -12,7 +12,7 @@ function marcarNumero(cell) {
         markedNumbers[number] = false;
         contadorNumerosMarcados--; // Resta 1 al contador
     } else {
-        cell.style.backgroundColor = 'lightblue';
+        cell.style.backgroundColor = 'lightgrey';
         markedNumbers[number] = true;
         contadorNumerosMarcados++; // Suma 1 al contador
     }
