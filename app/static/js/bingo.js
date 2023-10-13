@@ -12,7 +12,7 @@ function marcarNumero(cell) {
         markedNumbers[number] = false;
         contadorNumerosMarcados--; // Resta 1 al contador
     } else {
-        cell.style.backgroundColor = 'lightblue';
+        cell.style.backgroundColor = 'lightgrey';
         markedNumbers[number] = true;
         contadorNumerosMarcados++; // Suma 1 al contador
     }
@@ -69,9 +69,14 @@ btnVerificarBingo.addEventListener('click', function (e) {
 });
 
 
-// Declarar socket como variable global
-//const socket = io.connect('https://' + document.domain + ':' + location.port); //Local
-const socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com', { //Heroku
+// Local
+// const socket = io.connect('http://' + document.domain + ':' + location.port, {//local
+//     path: '/socket.io',
+//     transports: ['websocket'], // Utiliza WebSocket como transporte
+// });
+
+//Heroku
+const socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com', {
     path: '/socket.io',
     transports: ['websocket'], // Utiliza WebSocket como transporte
     secure: true, // Indica que es una conexión segura (HTTPS)

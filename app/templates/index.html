@@ -1,15 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styleIndex.css')}}">
+    <link rel="icon" href="{{ url_for('static', filename='Image/LogoBingo.png')}}">
     <title>Inicio</title>
 </head>
+
 <body>
-    <p>Bienvenido</p>
-    <a href="{{ url_for('bingo') }}">Ir a Bingo</a>
-    <br>
-    <a href="{{ url_for('tablero') }}">Ir al tablero</a>
+    <div class="welcome">
+        <img src="{{ url_for('static', filename='Image/LogoBingoBanner.png')}}" alt="">
+        <h2>Bienvenido</h2>
+    </div>
+    <div class="principal">
+        <a href="{{ url_for('tablero') }}">Ir al Tablero</a>
+        <a href="{{ url_for('bingo') }}">Ir a la Tabla</a>
+        <button type="button" data-toggle="modal" data-target="#myModal">
+            Como Jugar
+        </button>
+    </div>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Contenido de la ventana modal -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Intrucciones</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <h5>Tablero</h5>
+                        <li>Al seleccionar la pestaña tablero se redirigira a una pestaña con 4 botones, Iniciar, Parar, Reiniciar y Ordenar</li>
+                        <li>Iniciar: Al apretar comienza el juego cada 10 segundos aparecera una nueva balota, la voz indicara el numero, ademas se colocara en la columna donde vaya</li>
+                        <li>Stop: Si lo apretas detendras el juego por el tiempo que quieras, tranquilos no pierden lo que llevan, solo es una pausa</li>
+                        <li>Reiniciar: Terminaron la ronda y quieren volver a jugar, apretalo y comenzaran desde 0</li>
+                        <li>Ordenar: Las balotas salen en desorden por lo que si quieren ordenarlas en orden, apretalo y automaticamente el organizara</li>
+                        <br>
+                        <h5>Tabla</h5>
+                        <li>Si apretas ir a la tabla, seras llevado a la tableta para jugar, podras ver 2 botones</li>
+                        <li>Bingo: Se activa solo cuando tienes todos los numeros seleccionados, y verifica si has ganado, o debes seguir jugando</li>
+                        <li>Nueva Carta: Sientes que la tabla no tiene numeros adecuados y quieres una nueva seleccionala, y podras jugar con otra diferente aleatoriamente</li>
+                        <li>Para seleccionar los numeros solo debes clickearlos, si estas en celular, solo tocalos se colocaran en un color diferente</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

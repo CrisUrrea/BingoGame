@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='Image/LogoBingo.png')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styleTablero.css')}}">
-    <title>Bingo</title>
+    <title>Tablero</title>
 </head>
 
 <body>
@@ -13,20 +14,31 @@
     <div class="button-container">
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="start">
-            <button type="submit" {% if juego_iniciado %}disabled{% endif %}>Start</button>
+            <button type="submit" {% if juego_iniciado %}disabled{% endif %}>Iniciar</button>
         </form>
         <!-- En el formulario de pausa -->
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="stop">
-            <button type="submit" {% if not juego_iniciado %}disabled{% endif %}>Stop</button>
+            <button type="submit" {% if not juego_iniciado %}disabled{% endif %}>Parar</button>
         </form>
         <form method="POST" action="/tablero/">
             <input type="hidden" name="action" value="reiniciar">
             <button type="submit">Reiniciar</button>
         </form>
-        <form method="POST" action="/ordenar_numeros">
+        <form method="POST" action="/tablero/">
+            <input type="hidden" name="action" value="ordenar">
             <button type="submit" id="ordenarNumeros" {% if not juego_iniciado %}disabled{% endif %}>Ordenar</button>
         </form>
+        <a href="{{ url_for('index') }}">Volver</a>
+    </div>
+    <div>
+        {% if current_number %}
+        <h2 style="text-align: center;">Número actual: <span class="selected-number">{{ current_number }}</span></h2>
+        {% endif %}
+    </div>
+    <div class="highlighted-number-container">
+        <span id="highlightedNumber"></span>
+        <img src="{{ url_for('static',filename='Image/Esteban.jpg') }}" alt="Imagen 1" id="highlightedImage">
     </div>
     <div class="bingo-table">
         <div class="bingo-column" id="column-b">
@@ -55,21 +67,6 @@
                 {% endfor %}
         </div>
     </div>
-    <div>
-        {% if current_number %}
-        <h2 style="text-align: center;">Número actual: <span class="selected-number">{{ current_number }}</span></h2>
-        {% endif %}
-    </div>
-
-     <div class="highlighted-number-container">
-        <span id="highlightedNumber"></span> 
-       <img src="{{ url_for('static',filename='Image/Esteban.jpg') }}" alt="Imagen 1" id="highlightedImage">
-
-
-    </div>
-
-
-
     <!-- Importa la biblioteca de Socket.IO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="{{ url_for('static', filename='js/tablero.js') }}"></script>

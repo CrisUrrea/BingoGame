@@ -4,16 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='Image/LogoBingo.png')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styleBingo.css')}}">
-    <title>Bingo</title>
+    <title>Tabla</title>
 </head>
 
 <body>
     <h1 style="text-align: center;">Bingo</h1>
     <div class="btnCarta">
+        <br>
+        <a href="{{ url_for('index') }}">Volver</a>
         <form method="POST" action="/verificar_bingo">
+            <br>
             <button type="submit" id="btnVerificarBingo">Bingo</button>
-            <input type="text" name="numeros_marcados" id="numerosMarcados">
+            <input type="hidden" name="numeros_marcados" id="numerosMarcados">
         </form>
         <p id="contadorNumerosMarcados">0 de 25 números marcados</p>
         <button id="btnNewCard">Nueva Carta</button>
