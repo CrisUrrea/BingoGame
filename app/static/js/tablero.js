@@ -1,11 +1,11 @@
 // Declaración
-// const socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com', {
-//     path: '/socket.io',
-//     transports: ['websocket'], // Utiliza WebSocket como transporte
-//     secure: true, // Indica que es una conexión segura (HTTPS)
-// });
+const socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com', {
+    path: '/socket.io',
+    transports: ['websocket'], // Utiliza WebSocket como transporte
+    secure: true, // Indica que es una conexión segura (HTTPS)
+});
 
-var socket = io.connect('http://' + document.domain + ':' + location.port); // Local
+// var socket = io.connect('http://' + document.domain + ':' + location.port); // Local
 
 // Escucha la actualización de balotas desde el servidor
 socket.on('update_balota', function (data) {

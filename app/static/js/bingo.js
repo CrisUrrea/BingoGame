@@ -70,17 +70,17 @@ btnVerificarBingo.addEventListener('click', function (e) {
 
 
 // Local
-const socket = io.connect('http://' + document.domain + ':' + location.port, {//local
-    path: '/socket.io',
-    transports: ['websocket'], // Utiliza WebSocket como transporte
-});
-
-//Heroku
-// const socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com', {
+// const socket = io.connect('http://' + document.domain + ':' + location.port, {//local
 //     path: '/socket.io',
 //     transports: ['websocket'], // Utiliza WebSocket como transporte
-//     secure: true, // Indica que es una conexión segura (HTTPS)
 // });
+
+//Heroku
+const socket = io.connect('https://bingogame-e092ca37112d.herokuapp.com', {
+    path: '/socket.io',
+    transports: ['websocket'], // Utiliza WebSocket como transporte
+    secure: true, // Indica que es una conexión segura (HTTPS)
+});
 
 
 document.addEventListener("DOMContentLoaded", function () {
